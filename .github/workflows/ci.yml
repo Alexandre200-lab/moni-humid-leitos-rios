@@ -67,3 +67,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Verificar links
         run: python3 scripts/check_links.py
+
+  doxygen:
+    name: Documentacao da API (Doxygen)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+      - name: Gerar documentacao
+        run: doxygen Doxyfile
+      - name: Publicar artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-docs
+          path: docs/doxygen/html
+          if-no-files-found: error

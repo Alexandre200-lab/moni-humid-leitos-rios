@@ -44,7 +44,8 @@ static constexpr int    MAX_LOG_FILES     = 100;
 static constexpr size_t CSV_ROW_CAPACITY  = 104;
 
 // 13 colunas, na mesma ordem gerada por pure::buildCsvRow().
-static constexpr char LOG_HEADER[] =
+// Fica em PROGMEM (flash) para economizar SRAM, que e escassa no ATmega328P.
+static constexpr char LOG_HEADER[] PROGMEM =
   "seq,gps_valid,date,time,latitude,longitude,altitude_m,speed_kmh,course_deg,"
   "satellites,moisture_raw,moisture_pct,crc8";
 

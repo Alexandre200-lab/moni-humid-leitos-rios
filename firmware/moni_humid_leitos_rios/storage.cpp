@@ -38,7 +38,7 @@ bool openNewFile() {
       return false;
     }
 
-    file.println(config::LOG_HEADER);
+    file.println(reinterpret_cast<const __FlashStringHelper*>(config::LOG_HEADER));
     file.close();
 
     Diag::print(F("Arquivo de log: "));

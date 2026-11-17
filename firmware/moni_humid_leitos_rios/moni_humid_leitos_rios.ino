@@ -28,6 +28,7 @@ namespace {
 
 unsigned long lastSampleMs = 0;
 SystemState::Value state = SystemState::INIT;
+SystemState::Value previousState = SystemState::INIT;
 bool rtcAvailable = false;
 
 }  // namespace
@@ -61,6 +62,12 @@ void loop() {
 
   state = Storage::isReady() ? SystemState::WAITING_GPS : SystemState::SD_ERROR;
 
+  if (state != previousState) {
+    Diag::print(F("Estado: "));
+    Diag::println(SystemState::name(state));
+    previousState = state;
+  }
+
   // Subtracao tolera a voltagem do millis() apos ~49 dias.
   if (millis() - lastSampleMs >= Settings::rateMs()) {
     lastSampleMs = millis();
@@ -90,6 +97,18 @@ void loop() {
       Diag::error(F("Falha ao gravar a amostra no SD"));
     }
   }
+
+#if MONI_ENABLE_LOW_POWER
+  // O WDT do AVR dorme no maximo ~8 s por ciclo.
+  {
+    const unsigned long cycleMs = 8000UL;
+    unsigned long cycles = (Settings::rateMs() + cycleMs - 1UL) / cycleMs;
+    if (cycles < 1UL) cycles = 1UL;
+    if (cycles > 255UL) cycles = 255UL;
+    LowPower::sleepCycles(static_cast<uint8_t>(cycles));
+    lastSampleMs = millis();
+  }
+#endif
 
   StatusLed::update(state);
 }

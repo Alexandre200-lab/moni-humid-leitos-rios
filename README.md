@@ -20,7 +20,7 @@ O firmware é modular, testado nativamente no CI e configurável em campo via se
 - Georreferenciamento via **TinyGPS++**, com data/hora formatadas com zeros à esquerda.
 - CSV de 13 colunas com **`seq` monotônico e `crc8`** por linha.
 - Recuperação automática do SD: se falhar no boot, tenta de novo a cada 10 s.
-- Watchdog (`WDTO_8S`) reinicia o sistema se o `loop()` travar.
+- Watchdog (`WDTO_8S`) e máquina de estados, com transições no monitor serial.
 - Amostras de umidade **nunca são perdidas** por falta de GPS — `gps_valid` indica o que é válido.
 - Recursos opcionais por *feature flags*: **RTC DS3231**, **LED de status** e **deep sleep**.
 - Testes unitários da lógica pura + análise estática + checagem de links no CI.
@@ -92,8 +92,8 @@ arduino-cli upload --profile uno -p /dev/ttyACM0 firmware/moni_humid_leitos_rios
 localmente e no CI. Compilação de referência (Arduino CLI 1.6):
 
 ```
-Sketch uses 24284 bytes (75%) of program storage space.
-Global variables use 1519 bytes (74%) of dynamic memory, leaving 529 bytes for locals.
+Sketch uses 24522 bytes (76%) of program storage space.
+Global variables use 1455 bytes (71%) of dynamic memory, leaving 593 bytes for locals.
 ```
 
 ## ⚙️ Configuração em campo
@@ -141,6 +141,7 @@ Esquema das 13 colunas: [docs/data-format.md](docs/data-format.md).
 | Testes da lógica pura | `tests/test_pure_logic.cpp` → job `unit-tests` |
 | Análise estática | `cppcheck` → job `static-analysis` |
 | Links da documentação | `scripts/check_links.py` → job `docs` |
+| Documentação da API | `Doxyfile` → job `doxygen` (artefato `api-docs`) |
 | Atualização de Actions | `.github/dependabot.yml` |
 | Release com `.hex` | `.github/workflows/release.yml` (tags `v*`) |
 
@@ -181,6 +182,7 @@ python3 scripts/check_links.py
 ├── scripts/check_links.py
 ├── tests/test_pure_logic.cpp
 ├── CITATION.cff / Doxyfile
+├── CHANGELOG.md / SECURITY.md / CODEOWNERS
 ├── CONTRIBUTING.md / CODE_OF_CONDUCT.md
 └── LICENSE                        # GPL-3.0
 ```
@@ -203,6 +205,8 @@ Leia [CONTRIBUTING.md](CONTRIBUTING.md) e o [Código de Conduta](CODE_OF_CONDUCT
 
 [GNU GPL v3.0](LICENSE) · © 2026 Alexandre Gouveia ·
 [CITATION.cff](CITATION.cff) (botão "Cite this repository" no GitHub).
+Histórico em [CHANGELOG.md](CHANGELOG.md) · segurança em [SECURITY.md](SECURITY.md) ·
+mantenedor em [CODEOWNERS](CODEOWNERS).
 
 ## 🙏 Créditos
 
