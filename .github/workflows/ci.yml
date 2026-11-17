@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Instalar Arduino CLI
         run: |
@@ -38,7 +38,7 @@ jobs:
     name: Testes unitarios (logica pura)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Compilar e executar
         run: |
           g++ -std=c++17 -Wall -Wextra -Werror \
@@ -49,7 +49,7 @@ jobs:
     name: Analise estatica (cppcheck)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Instalar cppcheck
         run: sudo apt-get update && sudo apt-get install -y cppcheck
       - name: Analisar firmware
@@ -64,7 +64,7 @@ jobs:
     name: Documentacao (links locais)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Verificar links
         run: python3 scripts/check_links.py
 
@@ -72,7 +72,7 @@ jobs:
     name: Documentacao da API (Doxygen)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Instalar Doxygen
         run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
       - name: Gerar documentacao
