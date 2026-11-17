@@ -1,0 +1,33 @@
+name: Solicitar melhoria
+description: Sugira um novo sensor, módulo ou recurso.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isso resolve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Firmware
+        - CI e testes
+        - Documentação
+        - Hardware
+        - Telemetria
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas

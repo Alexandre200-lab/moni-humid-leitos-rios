@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "Se este projeto ajudou sua pesquisa ou campo de dados, por favor cite-o."
+title: "moni-humid-leitos-rios: monitoramento de umidade em leitos de rios"
+abstract: >-
+  Sistema de baixo custo baseado em Arduino Uno para medir umidade do sedimento
+  com sensor capacitivo, georreferenciar as amostras via GPS e registrá-las em
+  cartão microSD em formato CSV.
+authors:
+  - family-names: Gouveia
+    given-names: Alexandre
+version: 1.1.0
+date-released: 2026-11-16
+license: GPL-3.0-or-later
+repository-code: "https://github.com/Alexandre200-lab/moni-humid-leitos-rios"
+keywords:
+  - arduino
+  - environmental-monitoring
+  - soil-moisture
+  - gps
+  - riverbed
+  - iot

@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Compilar e publicar release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          sudo install -m 0755 bin/arduino-cli /usr/local/bin/arduino-cli
+
+      - name: Preparar toolchain
+        run: |
+          arduino-cli config init --overwrite
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+          arduino-cli lib install TinyGPSPlus SD RTClib
+
+      - name: Compilar firmware
+        run: |
+          arduino-cli compile --profile uno \
+            --export-dir dist firmware/moni_humid_leitos_rios
+          ls -lh dist
+
+      - name: Publicar artefatos
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.hex
+          generate_release_notes: true
+          fail_on_unmatched_files: true

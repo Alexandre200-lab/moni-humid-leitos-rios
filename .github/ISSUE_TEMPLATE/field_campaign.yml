@@ -1,0 +1,35 @@
+name: Relato de campanha de campo
+description: Registre uma implantação, calibração ou resultado de medição em campo.
+title: "[Campo]: "
+labels: [field-data]
+body:
+  - type: input
+    id: local
+    attributes:
+      label: Local / trecho do rio
+    validations:
+      required: true
+  - type: input
+    id: data
+    attributes:
+      label: Data da campanha
+      placeholder: "2026-11-16"
+    validations:
+      required: true
+  - type: input
+    id: sensor
+    attributes:
+      label: Sensor e calibração usados
+      description: "CAL_DRY / CAL_WET empregados"
+    validations:
+      required: true
+  - type: textarea
+    id: resultados
+    attributes:
+      label: Resultados e observações
+    validations:
+      required: true
+  - type: textarea
+    id: problemas
+    attributes:
+      label: Problemas encontrados

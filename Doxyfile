@@ -1,0 +1,13 @@
+# Doxygen — documentação da API dos módulos do firmware
+PROJECT_NAME           = "moni-humid-leitos-rios"
+PROJECT_BRIEF          = "Monitoramento de umidade em leitos de rios"
+OUTPUT_DIRECTORY       = docs/doxygen
+INPUT                  = firmware/moni_humid_leitos_rios
+FILE_PATTERNS          = *.h *.cpp *.ino
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_XML           = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO

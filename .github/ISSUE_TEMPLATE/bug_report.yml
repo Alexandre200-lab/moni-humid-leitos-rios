@@ -1,0 +1,46 @@
+name: Relatar bug
+description: Reporte um comportamento inesperado no firmware ou na documentação.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado pelo reporte. Preencha o máximo de detalhes possível.
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware utilizado
+      description: "Ex.: Arduino Uno + GPS Logger Shield v2.0 + SEN0193"
+    validations:
+      required: true
+  - type: input
+    id: toolchain
+    attributes:
+      label: Toolchain
+      description: "Arduino IDE 2.x ou arduino-cli X.Y.Z"
+    validations:
+      required: true
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu?
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que era esperado?
+    validations:
+      required: true
+  - type: textarea
+    id: serial
+    attributes:
+      label: Saída do monitor serial
+      render: shell
+  - type: textarea
+    id: passos
+    attributes:
+      label: Passos para reproduzir
+    validations:
+      required: true

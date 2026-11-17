@@ -1,0 +1,17 @@
+from,to,signal,notes
+U1:D2,J1:TX,GPS_SW_RX,SoftwareSerial RX (config.PIN_GPS_TX)
+U1:D3,J1:RX,GPS_SW_TX,SoftwareSerial TX (config.PIN_GPS_RX)
+U1:D8,J2:CS,SD_CS,chip select
+U1:D11,J2:MOSI,SPI_MOSI,fixed on Uno
+U1:D12,J2:MISO,SPI_MISO,fixed on Uno
+U1:D13,J2:SCK,SPI_SCK,fixed on Uno
+U1:A0,J3:AO,MOISTURE_ADC,analog output
+U1:D7,J3:VCC,MOISTURE_VCC,switched sensor power
+U1:D4,J1:VCC,GPS_VCC,optional switched GPS power (low power)
+U1:D6,LED1:A,STATUS_LED,optional status LED anode
+LED1:K,U1:GND,STATUS_LED_RETURN,through 220 ohm resistor
+U1:GND,J1:GND,GND,common
+U1:GND,J2:GND,GND,common
+U1:GND,J3:GND,GND,common
+U1:5V,J1:5V,VCC,regulated 5 V
+U1:5V,J2:5V,VCC,regulated 5 V

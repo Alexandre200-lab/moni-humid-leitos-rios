@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compilar firmware (Arduino Uno)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          sudo install -m 0755 bin/arduino-cli /usr/local/bin/arduino-cli
+          arduino-cli version
+
+      - name: Instalar core e bibliotecas
+        run: |
+          arduino-cli config init --overwrite
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+          arduino-cli lib install TinyGPSPlus SD RTClib
+
+      - name: Compilar sketch
+        run: arduino-cli compile --profile uno --warnings all firmware/moni_humid_leitos_rios
+
+  unit-tests:
+    name: Testes unitarios (logica pura)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compilar e executar
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Werror \
+            tests/test_pure_logic.cpp -o /tmp/moni-tests
+          /tmp/moni-tests
+
+  static-analysis:
+    name: Analise estatica (cppcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar cppcheck
+        run: sudo apt-get update && sudo apt-get install -y cppcheck
+      - name: Analisar firmware
+        run: |
+          cppcheck --enable=warning,style,performance --error-exitcode=1 \
+            --suppress=missingInclude --suppress=missingIncludeSystem \
+            --suppress=unusedFunction --suppress=unmatchedSuppression \
+            -I firmware/moni_humid_leitos_rios \
+            firmware/moni_humid_leitos_rios/*.cpp
+
+  docs:
+    name: Documentacao (links locais)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar links
+        run: python3 scripts/check_links.py

@@ -1,0 +1,11 @@
+profiles:
+  uno:
+    fqbn: arduino:avr:uno
+    platforms:
+      - platform: arduino:avr (1.8.8)
+    libraries:
+      - TinyGPSPlus (1.0.3)
+      - SD (1.3.0)
+      - dependency: Adafruit BusIO (1.17.4)
+      - RTClib (2.1.4)
+
